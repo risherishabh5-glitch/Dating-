@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you go out with me?</title>
+    <style>
+    
+        :root {
+            --bg-color: #e2f0d9; /* Minty background from the video */
+            --card-bg: #ffffff;
+            --text-color: #5a383d;
+            --accent-color: #ff8da1;
+            --accent-hover: #ff6b84;
+            --border-radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Container Card */
+        .card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Hide all steps by default */
+        .step {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.5s ease forward;
+        }
+
+        /* Show active step */
+        .step.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography & UI elements */
+        h2 {
+            color: var(--text-color);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        p {
+            color: #8c7679;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid #f9f0f2;
+        }
+
+        /* Buttons */
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-no {
+            background-color: #ebd7da;
+            color: #a38589;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        
+        .btn-no:hover {
+            background-color: #e2cbd0;
+        }
+
+        /* Step 3: Date and Time Inputs */
+        .form-group {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 6px;
+        }
+
+        input[type="date"], select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #f0e4e6;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--text-color);
+            outline: none;
+            background-color: #faf7f7;
+        }
+
+        input[type="date"]:focus, select:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* Step 4: Food Grid */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .food-item {
+            background: #faf7f7;
+            border: 2px solid #f0e4e6;
+            border-radius: 16px;
+            padding: 15px 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .food-item:hover {
+            border-color: var(--accent-color);
+            background: #fff5f6;
+            transform: translateY(-2px);
+        }
+
+        .food-emoji {
+            font-size: 1.8rem;
+        }
+
+        .food-name {
+            font-size: 0.8rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        /* Step 5: Final Screen footer text */
+        .ps-text {
+            font-style: italic;
+            font-size: 0.8rem;
+            color: #a39093;
+            line-height: 1.4;
+            margin-top: 15px;
+        }
+
+        .hearts {
+            color: var(--accent-color);
+            margin-top: 15px;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        
+        <div class="step active" id="step1">
+            <img src="png.jpeg" alt="Cute Dog" class="avatar">
+            <h2>Will you go on a date with me? 🌸</h2>
+            <div class="btn-container">
+                <button class="btn btn-no" id="noBtn">no 🥺</button>
+                <button class="btn" onclick="nextStep(2)">YES! 💕</button>
+            </div>
+        </div>
+
+        <div class="step" id="step2">
+            <div style="font-size: 3rem; margin-bottom: 15px;"><span style='font-size:50px;'>&#128536;</span></div>
+            <h2>WAIT YOU ACTUALLY SAID YES??</h2>
+            <p>I was so ready for you to say no 💀</p>
+            <button class="btn" onclick="nextStep(3)">okay okay! →</button>
+        </div>
+
+        <div class="step" id="step3">
+            <h2>So... when are you free? 📅</h2>
+            
+            <div class="form-group">
+                <label>Pick a Day 📅</label>
+                <input type="date" id="datePicker">
+            </div>
+
+            <div class="form-group">
+                <label>What Time? ⏰</label>
+                <select id="timePicker">
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="1:00 PM">1:00 PM</option>
+                    <option value="4:00 PM">4:00 PM</option>
+                    <option value="6:00 PM" selected>6:00 PM</option>
+                    <option value="7:30 PM">7:30 PM</option>
+                </select>
+            </div>
+
+            <button class="btn" style="width: 100%; margin-top: 10px;" onclick="nextStep(4)">set the date! ♥</button>
+        </div>
+
+        <div class="step" id="step4">
+            <h2>What are we feeling? 🍕✨</h2>
+            <p>pick your vibe</p>
+            
+            <div class="food-grid">
+                <div class="food-item" onclick="nextStep(5)">
+                    <span class="food-emoji">🍕</span><span class="food-name">Pizza</span>
+                </div>
+                <div class="food-item" onclick="nextStep(5)">
+                    <span class="food-emoji">🍣</span><span class="food-name">Sushi</span>
+                </div>
+                <div class="food-item" onclick="nextStep(5)">
+                    <span class="food-emoji">🍔</span><span class="food-name">Burgers</span>
+                </div>
+                <div class="food-item" onclick="nextStep(5)">
+                    <span class="food-emoji">🍝</span><span class="food-name">Pasta</span>
+                </div>
+                <div class="food-item" onclick="nextStep(5)">
+                    <span class="food-emoji">🌮</span><span class="food-name">Tacos</span>
+                </div>
+                <div class="food-item" onclick="nextStep(5)">
+                    <span class="food-emoji">🍜</span><span class="food-name">Ramen</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="step" id="step5">
+            <h2>glad you didn't say no. <br>be ready by 6, I'm coming to get you 🚗</h2>
+            <h1>cutie chasmis <span style='font-size:40px;'>&#128540;</span></h1>
+            <div class="hearts">♥ ♥ ♥ ♥ ♥</div>
+        </div>
+
+    </div>
+
+    <script>
+        // Set default minimum date to today
+        document.getElementById('datePicker').min = new Date().toISOString().split("T")[0];
+
+        // Function to cycle through card views
+        function nextStep(stepNumber) {
+            // Hide all steps
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            // Show requested step
+            document.getElementById('step' + stepNumber).classList.add('active');
+        }
+
+        // Trick "No" Button functionality (Runs away on hover!)
+        const noBtn = document.getElementById('noBtn');
+        noBtn.addEventListener('mouseover', () => {
+            // Generate arbitrary coordinates inside the card container limits
+            const x = Math.random() * 120 - 60; // moves horizontally
+            const y = Math.random() * 120 - 60; // moves vertically
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        
+        // Mobile tap safety rule: if they manage to click it, reset its position
+        noBtn.addEventListener('click', () => {
+            noBtn.style.transform = `translate(0px, 0px)`;
+            alert("Nice try! Try clicking the YES button instead 😉");
+        });
+    </script>
+</body>
+</html>
